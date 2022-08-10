@@ -28,6 +28,11 @@ Default `guitarkitty`. Positioned in the bottom left of screen. Must match a fil
 
 Required. [Create an application at dev.twitch.tv](https://dev.twitch.tv) and use that client id for `clientid`.
 
+### `token`
+
+Required. 
+[Create an OAuth token using twitch-cli dev.twitch.tv/](https://dev.twitch.tv/docs/cli/token-command) and use that for `token`.
+
 ## Example
 
 `https://joekombo.github.io/twitch-alert-overlay/?login=joekombo&clientid=[your client id]`
@@ -63,13 +68,13 @@ Go to web browser and view the page.
 
 Example URL:
 
-`http://localhost:5000/?login=joekombo&clientid=[your client id]`
+`http://localhost:5000/?login=joekombo&clientid=[your client id]&token=[the token created before]`
 
 _Note: Some browsers require permission to play sound. Click the tab and select allow audio/video._
 
 ## OBS
 
-Create a `Browser` source, input the URL, and then set the width to 1920 and height to 1080.
+Create a `Browser` source, input the URL, and then set your screen size (1920x1080, 2560x1440 ...).
 
 ## Contributions
 

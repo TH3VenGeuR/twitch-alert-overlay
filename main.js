@@ -1,9 +1,9 @@
-async function fetchUserId(login, clientid) {
+async function fetchUserId(login, clientid, token) {
   try {
     const response = await fetch(
       `https://api.twitch.tv/helix/users?login=${login}`,
       {
-        headers: { "Client-ID": clientid },
+        headers: { "Client-ID": clientid, "Authorization": token },
       }
     );
     const json = await response.json();
@@ -13,12 +13,12 @@ async function fetchUserId(login, clientid) {
   }
 }
 
-async function fetchFollowerIds(userId, clientId) {
+async function fetchFollowerIds(userId, clientid, token) {
   try {
     const response = await fetch(
       `https://api.twitch.tv/helix/users/follows?to_id=${userId}&first=100`,
       {
-        headers: { "Client-ID": clientId },
+        headers: { "Client-ID": clientid, "Authorization": token },
       }
     );
     const json = await response.json();
@@ -28,13 +28,13 @@ async function fetchFollowerIds(userId, clientId) {
   }
 }
 
-async function fetchFollowerDetails(followerIds, clientid) {
+async function fetchFollowerDetails(followerIds, clientid, token) {
   try {
     const followersString = followerIds.map((id) => `id=${id}`).join("&");
     const response = await fetch(
       `https://api.twitch.tv/helix/users?${followersString}`,
       {
-        headers: { "Client-ID": clientid },
+        headers: { "Client-ID": clientid, "Authorization": token },
       }
     );
     const json = await response.json();
@@ -74,11 +74,12 @@ async function startOverlay() {
     const sound = params.get("sound") || "guitar";
     const volume = Number(params.get("volume") || "50");
     const clientId = params.get("clientid");
+    const token = "Bearer".concat(' ', params.get("token"));
     const gif = params.get("gif") || "guitarkitty";
     const soundClip = configureSound(sound, volume);
 
-    const userId = await fetchUserId(login, clientId);
-    const initialFollowerIds = await fetchFollowerIds(userId, clientId);
+    const userId = await fetchUserId(login, clientId, token);
+    const initialFollowerIds = await fetchFollowerIds(userId, clientId, token);
 
     if (!clientId) {
       document.body.innerHTML = `
@@ -94,7 +95,7 @@ async function startOverlay() {
     let knownFollowersIds = initialFollowerIds;
 
     setInterval(async () => {
-      const followerIds = await fetchFollowerIds(userId, clientId);
+      const followerIds = await fetchFollowerIds(userId, clientId, token);
       let newFollowersIds = [];
 
       followerIds.forEach((id) => {
@@ -107,7 +108,8 @@ async function startOverlay() {
       if (newFollowersIds.length) {
         const followerDetails = await fetchFollowerDetails(
           newFollowersIds,
-          clientId
+          clientId,
+          token
         );
 
         let remainingDetails = followerDetails;
