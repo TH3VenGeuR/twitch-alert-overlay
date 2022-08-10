@@ -31,14 +31,11 @@ Required. [Create an application at dev.twitch.tv](https://dev.twitch.tv) and us
 ### `token`
 
 Required. 
+
+[Install the lates twitch CLI](https://github.com/twitchdev/twitch-cli/releases)
+
 [Create an OAuth token using twitch-cli dev.twitch.tv/](https://dev.twitch.tv/docs/cli/token-command) and use that for `token`.
 
-## Example
-
-`https://joekombo.github.io/twitch-alert-overlay/?login=joekombo&clientid=[your client id]`
-
-## Testing notifications are working using another streamer name
-Use another streamer's login name to test that notifcations are working. Example: `login=summit1g`
 
 _Note: Be patient.  The notifications may take up to 60 seconds to show for the first time.  **Before going live change name back to your login!**_
 
