@@ -111,6 +111,6 @@ body {
   z-index: 999;
   bottom: 0px;
   animation-name: slidein-right;
-  animation-duration: 3.2s;
+  animation-duration: 10s;
   animation-fill-mode: forwards;
 }
